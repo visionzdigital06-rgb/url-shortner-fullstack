@@ -4,7 +4,13 @@ let urls = []; // in-memory storage
 module.exports = async (req, res) => {
   if (req.method === 'POST') {
     try {
-      const { originalUrl } = req.body; // match your script.js
+      // Parse JSON body
+      let body = '';
+      for await (const chunk of req) {
+        body += chunk;
+      }
+      const { originalUrl } = JSON.parse(body);
+
       if (!originalUrl) return res.status(400).json({ error: 'URL is required' });
 
       // Create a short URL code
