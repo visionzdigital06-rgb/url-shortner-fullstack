@@ -1,4 +1,26 @@
 const express = require('express');
+const path = require('path');
+const app = express();
+
+// Serve static front-end files
+app.use(express.static(path.join(__dirname, '/')));
+
+// Root route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Your existing API routes here
+// Example:
+// app.post('/shorten', (req, res) => { ... });
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+
+const express = require('express');
 const bodyParser = require('body-parser');
 const shortid = require('shortid');
 const fs = require('fs');
